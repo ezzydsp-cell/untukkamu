@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haii Ainnn 💗</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ffd6e7,#fff0f6,#e5d9ff);
+  color:#5b3450;
+}
+.card{
+  width:min(90%,430px);padding:32px 24px;text-align:center;
+  background:rgba(255,255,255,.78);backdrop-filter:blur(10px);
+  border:2px solid rgba(255,255,255,.8);border-radius:28px;
+  box-shadow:0 20px 50px rgba(120,70,100,.18);position:relative;z-index:2;
+}
+h1{font-size:30px;margin-bottom:10px}
+.subtitle{font-size:14px;opacity:.7;margin-bottom:24px}
+#message{
+  min-height:130px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;line-height:1.65;font-weight:600;
+}
+button{
+  border:0;border-radius:999px;padding:13px 22px;margin:7px;
+  font-size:15px;font-weight:bold;cursor:pointer;
+  transition:.2s;box-shadow:0 8px 18px rgba(130,70,110,.15);
+}
+button:hover{transform:scale(1.06)}
+.main{background:#ff77a8;color:white}
+.music{background:#fff;color:#d85d91;border:1px solid #ffc0d7}
+#secret{display:none;margin-top:18px;font-size:14px;color:#8a5270}
+.heart{
+  position:fixed;bottom:-30px;font-size:22px;animation:float 6s linear forwards;
+  pointer-events:none;z-index:1;
+}
+@keyframes float{
+  0%{transform:translateY(0) rotate(0);opacity:0}
+  15%{opacity:.9}100%{transform:translateY(-110vh) rotate(360deg);opacity:0}
+}
+.pop{animation:pop .45s ease}
+@keyframes pop{50%{transform:scale(1.06)}}
+</style>
+</head>
+<body>
 
+<div class="card">
+  <h1>💌 Ada sesuatu nih...</h1>
+  <p class="subtitle">jangan berharap terlalu tinggi yaa 😭</p>
+
+  <div id="message">Klik tombolnya dulu, Ainnn 😏</div>
+
+  <button class="main" onclick="nextMessage()">Klik aku 😳</button>
+  <button class="music" onclick="toggleMusic()" id="musicBtn">🎵 Putar lagu</button>
+
+  <div id="secret">HAHAHA ketipu nggak? 😭❤️ <br>Maaf alayyy, yang penting niatnya.</div>
+</div>
+
+<audio id="music" loop>
+  <source src="ain.mp3" type="audio/mpeg">
+  Browser kamu tidak mendukung audio.
+</audio>
+
+<script>
+const messages = [
+  "Haii ainnn 👋🏻",
+  "Akuu iseng-iseng buat kayaa giniii 😭",
+  "Udahh ahh... gitu ajaa...",
+  "Tapi bentar... masih ada satu lagi 👀",
+  "Ikan hiu makan tomat 🦈🍅",
+  "I LOVE YOUUUU 💗😭",
+  "hhe maaf alayyy 😭👉🏻👈🏻"
+];
+
+let index = 0;
+const message = document.getElementById("message");
+const secret = document.getElementById("secret");
+
+function nextMessage(){
+  message.classList.remove("pop");
+  void message.offsetWidth;
+  message.classList.add("pop");
+
+  if(index < messages.length){
+    message.textContent = messages[index];
+    index++;
+    createHearts(4);
+  } else {
+    secret.style.display = "block";
+    message.textContent = "Okeee sekarang jangan salting 😭💗";
+    createHearts(12);
+  }
+}
+
+function toggleMusic(){
+  const music = document.getElementById("music");
+  const btn = document.getElementById("musicBtn");
+
+  if(music.paused){
+    music.play().then(()=>{
+      btn.textContent = "⏸️ Pause lagu";
+    }).catch(()=>{
+      alert("Pastikan file ain.mp3 ada satu folder dengan index.html yaa!");
+    });
+  }else{
+    music.pause();
+    btn.textContent = "🎵 Putar lagu";
+  }
+}
+
+function createHearts(amount){
+  for(let i=0;i<amount;i++){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.textContent=["💗","💕","💖","💘","❤️"][Math.floor(Math.random()*5)];
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(4+Math.random()*4)+"s";
+    heart.style.fontSize=(16+Math.random()*20)+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),8000);
+  }
+}
+
+setInterval(()=>createHearts(1),1800);
+</script>
+
+</body>
+</html>
